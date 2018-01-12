@@ -1,0 +1,88 @@
+package com.myteam.barcellona20180115;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.junit.Test;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.task.TaskService;
+import org.kie.dmn.feel.util.EvalHelper;
+import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertEquals;
+
+public class BPMN2ModelTest extends JbpmJUnitBaseTestCase {
+
+    private static final Logger logger = LoggerFactory.getLogger(BPMN2ModelTest.class);
+
+    public BPMN2ModelTest() {
+        super(true, true);
+    }
+
+    @Test
+    public void test_basic() {
+        Map<String, ResourceType> resources = new HashMap<>();
+        resources.put("com/myteam/barcellona20180115/Loan Origination Example.bpmn2", ResourceType.BPMN2);
+        resources.put("com/myteam/barcellona20180115/Loan Pre-Qualification.dmn", ResourceType.DMN);
+        resources.put("com/myteam/barcellona20180115/Routing Alternative1.dmn", ResourceType.DMN);
+        RuntimeManager manager = createRuntimeManager(resources);
+        RuntimeEngine runtimeEngine = getRuntimeEngine(ProcessInstanceIdContext.get());
+        KieSession ksession = runtimeEngine.getKieSession();
+        TaskService taskService = runtimeEngine.getTaskService();
+        AuditService auditService = runtimeEngine.getAuditService();
+
+        final String USER_ID = "krisv";
+
+        ProcessInstance processInstance = ksession.startProcess("barcellona20180115.OriginationExample");
+        long processInstanceId = processInstance.getId();
+
+        assertProcessInstanceActive(processInstanceId, ksession);
+        assertNodeTriggered(processInstanceId, "Start Loan Origination Process", "Collect Application Data");
+
+        List<Long> list = taskService.getTasksByProcessInstanceId(processInstanceId);
+        assertEquals(1, list.size());
+
+        ApplicantData applicantData = new ApplicantData();
+        applicantData.setAge(51);
+        applicantData.setMaritalStatus("M");
+        applicantData.setEmploymentStatus("Employed");
+        applicantData.setExistingCustomer(false);
+        applicantData.setMonthly(new Monthly());
+        applicantData.getMonthly().setIncome(EvalHelper.getBigDecimalOrNull(16_500));
+        applicantData.getMonthly().setRepayments(EvalHelper.getBigDecimalOrNull(2_500));
+        applicantData.getMonthly().setExpenses(EvalHelper.getBigDecimalOrNull(3_000));
+        applicantData.getMonthly().setTax(EvalHelper.getBigDecimalOrNull(0.36));
+        applicantData.getMonthly().setInsurance(EvalHelper.getBigDecimalOrNull(1_000));
+        RequestedProduct requestedProduct = new RequestedProduct();
+        requestedProduct.setType("Standard Loan");
+        requestedProduct.setRate(EvalHelper.getBigDecimalOrNull(0.08));
+        requestedProduct.setTerm(EvalHelper.getBigDecimalOrNull(36));
+        requestedProduct.setAmount(EvalHelper.getBigDecimalOrNull(100_000));
+        CreditScore creditScore = new CreditScore();
+        creditScore.setFICO(EvalHelper.getBigDecimalOrNull(650));
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("ApplicantData", applicantData);
+        data.put("RequestedProduct", requestedProduct);
+        data.put("CreditScore", creditScore);
+
+        Long taskId0 = list.get(0);
+        taskService.start(taskId0, USER_ID);
+        taskService.complete(taskId0, USER_ID, data);
+
+        assertNodeTriggered(processInstanceId, "Accepted Application");
+
+        assertEquals("Qualified", auditService.findVariableInstances(processInstanceId, "LoanPreQualification").get(0).getValue());
+        assertEquals("Accept", auditService.findVariableInstances(processInstanceId, "Routing").get(0).getValue());
+        assertEquals("ACCEPT APPLICATION", auditService.findVariableInstances(processInstanceId, "FINAL_RESULT").get(0).getValue());
+    }
+}

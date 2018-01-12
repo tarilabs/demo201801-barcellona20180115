@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<semantic:definitions xmlns:semantic="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns="http://www.trisotech.com/definitions/_6b57a9bb-c442-4719-b9ff-39c4a4f89419" xmlns:feel="http://www.omg.org/spec/FEEL/20140401" xmlns:tc="http://www.omg.org/spec/DMN/20160719/testcase" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:trisofeed="http://trisotech.com/feed" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="DMN Modeler" exporterVersion="5.2.7" id="_6b57a9bb-c442-4719-b9ff-39c4a4f89419" name="Routing Alternative #1" namespace="http://www.trisotech.com/definitions/_6b57a9bb-c442-4719-b9ff-39c4a4f89419" triso:logoChoice="Default">
+  <semantic:description>&lt;p&gt;&lt;strong&gt;DETERMINE ROUTING (ROUTING DECISION SERVICE RE-IMAGINED Alternative #1)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This report, like all the others in the Trisotech submission, was generated from a single click of a menu-ribbon button on the Import-Export Menu of the DMN Modeler. This export to both Word and and HTML format is available as a standard feature of the modeler.&lt;/p&gt;
+&lt;p&gt;The same basic approach was taken for the new implementation of the routing decision model. In this case, we took a slightly different approach to the affordability determination to demonstrate the expressive power of FEEL Conformance Level 3.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We have removed the superfluous use of boxed contexts solely for the sake of improving readability. Using BKMs frequently gives us this readability.&lt;/li&gt;
+&lt;li&gt;The core decision tables contain logic that&amp;nbsp;frequently changes and are easily accessible for modification when required. We believe the readability and manageability goals are met quite well with this approach.&lt;/li&gt;
+&lt;li&gt;The Affordability calculations have all been incorporated into boxed expressions&amp;nbsp;&amp;ndash; in this alternative the calculations are in boxed expressions which either call additional BKMs (PMT, Loan Fee, &amp;amp; Contingency Factor) containing common functions or evaluate variables directly in the boxed expression. The&amp;nbsp;logic is presented in BKMs in a fashion that should be extremely clear to business analysts (loan officers in this case). The typical uses for BKMs include common, reusable decision logic and organization-specific variable data typically representing policy decisions (ranks, ratios, scoring ranges, etc.) associated with separation of concerns.&amp;nbsp;This makes it very easy for the business user to add additional loan types or change the fees associated with them. Also&amp;nbsp;important is the idea that these are logic pieces&amp;nbsp;that would typically be reused numerous times in a lending process so representation as a Business Knowledge Model is the best approach.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;</semantic:description>
+  <semantic:extensionElements>
+    <triso:ProjectCharter>
+      <triso:projectGoals/>
+      <triso:projectChallenges/>
+      <triso:projectStakeholders/>
+    </triso:ProjectCharter>
+  </semantic:extensionElements>
+  <semantic:itemDefinition isCollection="false" label="Requested Product" name="Requested_Product">
+    <semantic:itemComponent id="_44fa13d5-d57f-44cb-9fe7-33f18316a4a0" isCollection="false" name="Type">
+      <semantic:typeRef>feel:string</semantic:typeRef>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_01e6bc1f-260c-4fc0-837a-733f773757b9" isCollection="false" name="Rate">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_d08d50c2-73a3-4df1-bc6f-170629a0954c" isCollection="false" name="Term">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_df1ae2b7-dc4c-4d1d-9043-440d3d65f9c5" isCollection="false" name="Amount">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+    </semantic:itemComponent>
+  </semantic:itemDefinition>
+  <semantic:itemDefinition isCollection="false" label="Applicant Data" name="Applicant_Data">
+    <semantic:itemComponent id="_4c605d6c-9bbc-42da-b3b9-2ce71d3d3e45" isCollection="false" name="Age">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+      <semantic:allowedValues triso:constraintsType="simple">
+        <semantic:text>(18..120)</semantic:text>
+      </semantic:allowedValues>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_51782beb-e9a3-442a-885a-1b5651d480a1" isCollection="false" name="Marital Status">
+      <semantic:typeRef>feel:string</semantic:typeRef>
+      <semantic:allowedValues triso:constraintsType="enumeration">
+        <semantic:text>"S","M"</semantic:text>
+      </semantic:allowedValues>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_ee30215b-9011-4582-8076-bf8a87efc1f1" isCollection="false" name="Employment Status">
+      <semantic:typeRef>feel:string</semantic:typeRef>
+      <semantic:allowedValues triso:constraintsType="enumeration">
+        <semantic:text>"Unemployed","Employed","Self-Employed","Student"</semantic:text>
+      </semantic:allowedValues>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_4510b257-a76c-4696-a3b9-7bc4fca741fb" isCollection="false" name="Monthly">
+      <semantic:itemComponent id="_2d1fa185-9ddf-4e28-8fb0-38ed76ccb160" isCollection="false" name="Income">
+        <semantic:typeRef>feel:number</semantic:typeRef>
+      </semantic:itemComponent>
+      <semantic:itemComponent id="_b74001e8-6afb-481d-a554-420c96195206" isCollection="false" name="Repayments">
+        <semantic:typeRef>feel:number</semantic:typeRef>
+      </semantic:itemComponent>
+      <semantic:itemComponent id="_5cd4b14b-0784-4282-9962-240b47f9d923" isCollection="false" name="Expenses">
+        <semantic:typeRef>feel:number</semantic:typeRef>
+      </semantic:itemComponent>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_83c2464f-9610-4ddf-ac30-2c5bedc3e838" isCollection="false" name="Existing Customer">
+      <semantic:typeRef>feel:boolean</semantic:typeRef>
+    </semantic:itemComponent>
+  </semantic:itemDefinition>
+  <semantic:itemDefinition isCollection="false" label="Bureau Data" name="Bureau_Data">
+    <semantic:itemComponent id="_86bfdae6-816c-4446-89be-1c17220dc83b" isCollection="false" name="Bankrupt">
+      <semantic:typeRef>feel:boolean</semantic:typeRef>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_f0fbbc13-7bb6-48c3-bd9f-cb2e96efcadf" isCollection="false" name="Credit Score">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+    </semantic:itemComponent>
+  </semantic:itemDefinition>
+  <semantic:itemDefinition isCollection="false" label="Post-Bureau Affordability" name="Post-Bureau_Affordability">
+    <semantic:itemComponent id="_0230950e-d0e5-4e00-8d96-111af4eff6b2" isCollection="false" name="Risk Category">
+      <semantic:typeRef>feel:string</semantic:typeRef>
+      <semantic:allowedValues triso:constraintsType="enumeration">
+        <semantic:text>"High","Medium","Low","Very Low","Decline"</semantic:text>
+      </semantic:allowedValues>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_647886e1-1033-40fa-9770-fc2f65d2978d" isCollection="false" name="Credit Contingency Factor">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+    </semantic:itemComponent>
+  </semantic:itemDefinition>
+  <semantic:itemDefinition isCollection="false" label="Bureau Risk Category" name="Bureau_Risk_Category">
+    <semantic:itemComponent id="_368ea794-34ff-4443-bdcc-fb7d0b4da6ac" isCollection="false" name="Risk Category">
+      <semantic:typeRef>feel:string</semantic:typeRef>
+      <semantic:allowedValues triso:constraintsType="enumeration">
+        <semantic:text>"High","Medium","Low","Very Low","Decline"</semantic:text>
+      </semantic:allowedValues>
+    </semantic:itemComponent>
+    <semantic:itemComponent id="_b28ae476-ec45-4004-b3d0-cd69a63b990c" isCollection="false" name="Credit Contingency Factor">
+      <semantic:typeRef>feel:number</semantic:typeRef>
+    </semantic:itemComponent>
+  </semantic:itemDefinition>
+  <semantic:itemDefinition isCollection="false" label="Risk Category" name="Risk_Category">
+    <semantic:typeRef>feel:string</semantic:typeRef>
+    <semantic:allowedValues triso:constraintsType="enumeration">
+      <semantic:text>"High","Medium","Low","Very Low","Decline"</semantic:text>
+    </semantic:allowedValues>
+  </semantic:itemDefinition>
+  <semantic:itemDefinition isCollection="false" label="Product Type" name="Product_Type">
+    <semantic:typeRef>feel:string</semantic:typeRef>
+    <semantic:allowedValues triso:constraintsType="enumeration">
+      <semantic:text>"Standard Loan","Special Loan"</semantic:text>
+    </semantic:allowedValues>
+  </semantic:itemDefinition>
+  <semantic:decision id="_43369770-4c9e-4480-bd36-00a74729ecd6" name="Routing" triso:displayName="Routing">
+    <semantic:description>&lt;p&gt;This decision results in a text sting of "Accept", "Decline" or "Refer" based on the priority hit policy in the decision table. If the applicant can not afford the loan or has had a bankruptcy, they will be declined. High risk scores or low credit scores for the applicant send the application through the referral process (See Loan Origination Business Process Management (BPMN) diagram as part of this submission.) If none of these conditions exist, the application will be deemed accepted.&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_6a2badea-9a58-416e-ac7c-eeda29349c72" name="Routing" typeRef="feel:string"/>
+    <semantic:informationRequirement>
+      <semantic:requiredDecision href="#_d174ec00-d1ad-4a02-81a8-d1099c12a55d"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredDecision href="#_dd89de89-3253-400b-ad82-1c7f8c361b25"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_8543b5af-f613-4ae3-9af5-9dfd3e08da5a"/>
+    </semantic:informationRequirement>
+    <semantic:authorityRequirement>
+      <semantic:requiredAuthority href="#_4e0c1645-feb0-4758-ba93-7d10556b9cbb"/>
+    </semantic:authorityRequirement>
+    <semantic:decisionTable hitPolicy="PRIORITY" id="_66c1c134-cb6d-4bda-a35a-ddd23fe9e78f" outputLabel="Routing">
+      <semantic:input id="_a40866e9-4861-4856-9edb-1fc962d01ea7">
+        <semantic:inputExpression typeRef="Risk_Category">
+          <semantic:text>Risk Category</semantic:text>
+        </semantic:inputExpression>
+        <semantic:inputValues triso:constraintsType="enumeration">
+          <semantic:text>"High","Medium","Low","Very Low","Decline"</semantic:text>
+        </semantic:inputValues>
+      </semantic:input>
+      <semantic:input id="_ab911e0e-1405-432d-b711-4ebcc5ac2dce">
+        <semantic:inputExpression typeRef="feel:boolean">
+          <semantic:text>Affordability</semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:input id="_b784f4dc-49b7-434a-9307-f48495181a4f">
+        <semantic:inputExpression typeRef="feel:boolean">
+          <semantic:text>Bureau Data.Bankrupt</semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:input id="_46762fe5-4560-440d-bfb4-0a490e0bf0e3">
+        <semantic:inputExpression typeRef="feel:number">
+          <semantic:text>Bureau Data.Credit Score</semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:output id="_b2448034-1b5c-4be2-8996-a6002f255c72">
+        <semantic:outputValues triso:constraintsType="enumeration">
+          <semantic:text>"Decline","Refer","Accept"</semantic:text>
+        </semantic:outputValues>
+      </semantic:output>
+      <semantic:rule id="_e844907e-554c-4973-9e21-d05ed56d7b92">
+        <semantic:inputEntry id="_a0e895ca-db36-42f4-bdf7-741bc3018140">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_f7e211a4-35ac-42d1-8b25-8b05d14e7fac">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_0eb31d9a-217a-4721-935e-dc4b3b919483">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_938c269e-3e54-401f-a0e9-f19570838a6c">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_dcbbf662-ad2c-4c87-ac3a-a643fc39c180">
+          <semantic:text>"Decline"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_c341e92d-ae40-4969-aedc-0788ef1f8889">
+        <semantic:inputEntry id="_1705fa0a-5709-4876-a5f5-cd1a5b07971a">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_d699ee28-fdc2-4e7c-8754-d0f07d13eb04">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_7f345032-3a62-484b-9b68-f586e111dfae">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_ddb6c1e4-7e2e-4ed1-a688-384222f0b824">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_97dfd02f-c4fe-4799-bc63-a14587507bcc">
+          <semantic:text>"Decline"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_aaf4642f-c66b-417c-a241-44511d4fe538">
+        <semantic:inputEntry id="_f9dd81f3-1b10-4337-9f64-37bc60847ede">
+          <semantic:text>"High"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_8d204661-222d-4445-9e3c-1327b3e0a6bf">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_e3d1aaba-7412-4afa-9acf-bd08140fddb6">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_9a6c41f0-a8a9-492d-b97e-677fe73a3a59">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_e5010d60-c3c0-4521-af74-e33284ea306f">
+          <semantic:text>"Refer"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_7658dd25-8a2f-4f3b-8452-ef07ff951696">
+        <semantic:inputEntry id="_c04e2f82-e2c5-4dc7-a7e8-24cc6bf2ad61">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_ad783e01-f513-41cb-8e84-5abb4809c8bc">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_d0dfbf0f-0da5-4b2d-86ff-7a2ee0135781">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_606374d9-d84b-4d3d-a988-4a9f5a7980c4">
+          <semantic:text>&lt;580</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_600ab87c-0e82-47c4-a02c-6abee935b651">
+          <semantic:text>"Refer"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_6bb69743-303b-4fcb-87e4-59d838bc14ea">
+        <semantic:inputEntry id="_01df5fa7-b1a0-4d31-8c12-c16a40a63a71">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_95604181-b2da-4e1f-be3e-34d1fd0de859">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_87c2a8c2-a733-4d28-af5a-aa953f592cfe">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_e98c6c34-587a-4c72-84f3-a9e5a59e3a82">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_9a8a3c0c-2ac6-43b5-b174-75e324d46faf">
+          <semantic:text>"Accept"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+    </semantic:decisionTable>
+  </semantic:decision>
+  <semantic:inputData id="_8543b5af-f613-4ae3-9af5-9dfd3e08da5a" name="Bureau Data" triso:displayName="Bureau Data">
+    <semantic:description>&lt;p&gt;This is the data used by the pull from the credit bureau:&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;img src="blob:https://allegianceadvisory.trisotech.com/af5a9dc2-9618-48b3-af1b-d2dc5263d0a6" /&gt;&lt;img src="data:image/png;base64,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" /&gt;&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_54ae3c17-df2d-42c1-bff8-880a7f9b9566" name="Bureau Data" typeRef="Bureau_Data"/>
+  </semantic:inputData>
+  <semantic:inputData id="_0af2d672-97ae-477e-a9de-4affcaa39f17" name="Applicant Data" triso:displayName="Applicant Data">
+    <semantic:description>&lt;p&gt;This is the applicant data acquired in the DM Origin BPMN activity Collect Application Data.&lt;/p&gt;
+&lt;p&gt;&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgsAAADvCAYAAAB8FZdzAAAgAElEQVR4Ae2dB7hURfL2iyUjoH+VpAKiSBAQBXERARMKqIhhMYsY0EXXgGLAiAEDsq6Y0FVxMeCKwmIEA4hKEAy4giIGBAREQZcoWb7n17s937mHmbmT78y9bz3P3JO6q7vfPvdUdVV1d7lt27ZtM5EQEAJCQAgIASEgBGIgUIH7//nPf2I81u1CR+D//u//Cr0Jqr8QEAJCQAiUMAJOWSjhOqj4AkIgG4olCk02+BYQrKW6qurfUt29alwZQeAPZaSdaqYQEAJCQAgIASGQIgKyLKQIXElm++233+y9996zcLjJjjvuaIccckhJVk1lCwEhIASEQClEQMpCAXYqSsK4ceNs/vz5RWp/yimnSFkogogusoWAFNZsISu+QiA/EZCykJ/9ErdWO+ywgw0ZMsSuueaaiMJw0kknWd++fePm00MhkCkEpLBmCknxEQKFgYBiFgqjn7arJS4HFIa99trLUBT69eu3XRrdEALZQsArrLx/nvJJYf3999/thx9+8FXTUQgIgTQRkLKQJoAlmR2FYfjw4VIUSrITynDZ6Sisd9xxh82bN68Iek888YTh3sgErVu3zu66665MsBIPISAEzEzKQoG/Bn/4g7qwwLuwoKufqsKKovC3v/3NtmzZEmn/l19+WeQ68kAnQkAIlDgCilko8S5QBYRAYSOQisK600472f7772/PPfecnXPOOdsBMGjQIOPn6dZbb7VbbrnFPv/8c/vuu+/siy++sOXLl1unTp1sjz32cAG/VapUsdNOO82aNWvmspUrV86wVsydO9cOPPBA69Gjh1WvXt02b95sI0aMcJaNli1b2oknnmisBTFmzBjbe++9bezYsVavXj1Z7Dz4OgoBWRb0DggBIVASCGzatMl69+5tU6dOjQTpBuvx9ddfBy/t22+/dderV6+2f/7zn3bBBRfYPffcY6+++qpNnjzZKRbMBnr++ecj+eDRtGlTu/feew1FAsUEmjRpklWsWNGGDh1qjRo1itxftmyZPfnkky5QWDFAERh1IgQcArJh60UQAkIg5wgQgIjAvvzyy507gutEqVWrVla3bl2nAKAMdO7c2Z3vu+++RRQPrAgdO3Y0LB/dunWzTz75xBUxbdo0d2T68c8//2wffPBBpOjDDjvM6tev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7wPVQAiki4DcEOkiqPxCQAgIASEgBEo5AlIWSnkHq3lCQAgIASEgBNJFQG6IdBFUfiFQBhH47bff7L333ttux8Ydd9yxxNdQKIPdoSYLgawjIGUh6xCrACFQ+hBg2eRx48a5LaCDrWOXyJJecClYH50LASGQGQTkhsgMjuIiBMoUAjvssIMNGTKkyPbObPjUt2/fMoWDGisEygoCsiyUlZ5WO4VAhhHA5YDCcM0119j+++9v/fr1S6iEe+65x9auXVskLTMmrrzyyiL3irtge2mUFpEQEALZR0DrLGQf4xItIdPrLGjqZIl2Z14W/vvvv7udHGNVLjx1ctWqVUael19+2SpVqmTdu3d3+VE+EiV4PPnkk0krGInyVzohIASKIiA3RFE8dCUEhECSCLDlczKEUoACUbVqVffjnHsrVqyw22+/3VkqXnnlFduyZYv9+OOPNnTo0Egg5VNPPWWzZs0yrBOffvqpDRo0yL755ptkildaISAEUkBAbogUQFMWISAEMo/AiBEjrGvXrnbggQfaI488YtOmTbPOnTvbTjvt5IIp69evb4sXL7Zzzz3XbTU9ceJEu+qqqzJfEXEUAkJgOwSkLGwHiW4IASGQawRwS8yZM8caN27sFIKtW7falClTnLLQp08fu/rqq23Tpk12991357pqKk8ICAEzk7Kg10AI5BCB5cuXW7Vq1RSYF8J848aNzu3QsGFD94RjzZo13Xn58uVdbMPmzZutYsWKoZy6FAJCIBcIJOdszEWNVEbBIoCP+dFHH7VevXrZJZdcYlOnTs2rtuD/vummm+zrr78uUi8E1S233GLTp08vcr+4C6Lx8Zl74ro4Gj16tM2ePXu7ZB9//LHzw1933XX2xBNPmOflj9tlCN1INF0oW95cEr/QpEkTq169urVt29b9sDJAL7zwgrVq1cr+9Kc/2cMPP+zu1ahRw1avXp039VdFhEBpR0DKQmnv4Ry27+eff3YjwGeffdauvfZaGzBggCGI84VYdXDJkiVG8FyQPvjgA1u0aJELpgveL+6caXt+uiDR+Y899lhxWaI+J+/jjz9uZ511lg0cONBat27trA8kZmpicZRO2cXxzuXz3r1724svvmgoTBdeeKFNmDDB5s2bZzNnzrQzzjjDDjvsMOeKeP/99936DrxbKGtffvllLqupsoRAmUSg/KBBgwZt2LChTDa+LDSaEVsmKd67wmjvgAMOsAoVKrjo9nfffdf2228/23XXXeNWgTrG4xs3cxIPmfb5yy+/2FdffWVHHXVUxKSNkG/Tpo1VqVLFmjdvbsuWLXMR+K+++qrNnTvX3ePZmDFjnLAi+A4eLVq0cNP3GAkPHjzY3fv8889t9913N0zmRPGHeXz00Ue222672R577BGp+cKFC+2HH36w4447ztWB/OXKlbORI0caQXxYQuC355572rBhw5xARYDWq1fPjcTDZY8fP94pGzvvvLMrg8DBWrVqObP+G2+8Yc8884wTxMQAMJrPNsXq35YtWzpsffnMiiCgkRUge/ToYU2bNnXvDkGP4AF16tTJcFFw3aVLF2vXrp3D2/PQUQgIgewgoJiF7OBa5rkilIlc54OfT0TgHAJn8uTJbn7/0qVLXfwA5m9PCK2LLrrICWNM4JMmTbITTzzRKRHkYxEiIvPXrFnjljuuXLmyscxxMDqfUW80Hr6M4BGMUJZQLk499VTHm+eMtOEZdHVQD4QlI+5Ro0a5Z+Gyx44da1hRPKGIwH/lypWuLZSDyyhfXRfJKLhalMn3so5CILsIyA2RXXzLJHcEE4KSUbAfEeYTEN26dbO33nrLVYlRONdBQvizdgBKAgGJ3377beQxpnAUheIoHo9oebEOHHzwwfbXv/7VHnzwwci6AuG0WGlmzJjhZg7Mnz8//DjuNQoRezoMHz7cWViSWQQpLmM9FAJCoNQjIGWh1HdxbhvIiPqCCy6w8847zy0BnNvSEyutTp06zgWxYMECt8AP8/qDhNn++eefd2b7Ro0aBR8lbPKOx6MIw8AF5vf777/fKShMIwwTQZC33Xabc4UQ18B0w0QICwiEewirAq4ipiCGYzcS4aU0QkAIlE0EpCyUzX7PSqvxgbOR0Omnn27HHHNMVsrIFFP84AhM4g3CKxBiUSBwESUCE34iFI7OT4YHLoEgcc1CRN4qgzUAeuedd5ybAr8+qx16CpfdoEEDF7DJ8/Xr17u4C87hA8/27ds798Xbb7/tWegoBISAEIiLgGIW4sKjh8kgwFr9RKoTsOej+Hv27JmX6/d37NjRHnroIbdiYLiNBBreeOONRnwDAZp+ZB5OF7zea6+93MwP4guIIUiGB7MxXn/9dTeTBIWLTZm8qwO3B7MDDj/8cBeUSdAjMQlYR2rXru2qEC6btODPVFBiF2gDigKBm0w9ZJ0H7hMfIRICQkAIJIKANpJKBKUCTkOwXiaprGwkhdBmMSB+yRBBgz7oLlkeCHAEeZiIAWExIuqC0IcvMRFhCpbNM/IxiyNMWBuSCSIM50/2mncwG+9NsvVQeiEgBFJHQFMnU8euIHJmWigggDJNsabWZbqcZPghmMPuiUTys4uip2R5xFqdkFgDXxfcCFxHo2DZPI+VLlY50Xhm4l60/mX6ad26de2BBx6wQw891JhmyyZRTO3kHcO1wmyP77//3sVmYEkJE64erFikYwol1hnWaYCfJ8rB2tWhQwe7+eab3VRMrpn2KhICQiBxBBSzkDhWSikEhECGECDmAisJ7hYsImxXfeutt9q9997rprQy7ZZ1JVAW9tlnn6ilfvfdd9asWTO3BgUWFHajxGriidkiX3zxhVvzAwWE2SAEtfqVIX06HYWAECgegehDlOLzKYUQEAJCIGUECNJkNgcxGQh4Fp3y7hUsH7hZDjroIHeM5kqhYJQI4jaOOOIIVw9iS3bZZRfHBysLFgfiP1jHAhcPU2RJw9LRIiEgBJJDQDELyeFVcKkVs1BwXVbqKpxIzAJuCFwI/fv3j2lJiAcM62EQYMtKlcx0+emnn9z6GKy0ycwWHwwaj4eeCQEhEBsBuSFiY6MnQkAI5AgBZnAw64N1JFIhlAIsCMRBsGEYa0iw2iVKgxSFVBBVHiFQFAEpC0Xx0JUQEAIlhAB7Wfj9LIJVwD1R3PRVlr8mfgFlgQW1cHOQJxq/IG+dCwEhkBgCillIDCelEgJCIAsIEEtw1VVXuc21iFtg580wEXvAxltsHBWLWJKbvTRwRxDMSBzDtGnT8m5vklj1130hkO8IKGYh33sozfopZiFNAJU9bQSKi1kg0BEBH22NCRbGYpYEP7+iZdoVEgMhIASSRkBuiKQhUwYhIAQyiQBrSERTFCiDpa8vu+wyKQqZBFy8hEAKCMgNkQJoyiIEhEBuEGAKZbTVKnNTukoRAkLAIyDLgkdCRyEgBISAEBACQiAqAlIWosKim0JACAgBISAEhIBHQMqCR0JHISAEhIAQEAJCICoCmg0RFZbSczPTsyFKDzJqiRAQAkJACCSKgAIcE0VK6RwC2dhquLipdYK+sBFQ/xZ2/6n2QgAE5IbQeyAEhIAQEAJCQAjERUDKQlx49FAICAEhIASEgBCQG0LvgBAQAkkjwDLN7733nm3btq1I3h133NEOOeSQIvd0IQSEQOEjIGWh8PtQLRACOUcAJeHll1+27777rkjZp5xyipSFIojoQgiUDgTkhigd/ahWCIGcIrDDDjvYPffcY3vvvXek3JNOOsn69u0buY51gqIR7Rcrve4LASFQ8gjIslDyfaAaCIGCRACXAwrDtddea61bt7Z+/fol1I4hQ4bY2rVri6RlxsSVV15Z5F5xF+vWrTOUFpEQEALZR0DrLGQf4xItIdPrLGjqZIl2Z14Wzq6RbAYVi8JTJ1etWmXkwY1RqVIl6969u8uP8uFjIII7THIveE058HjyySetf//+2z2LVQ/dFwJCIHUEYv+Hp85TOYWAEChDCMRTFKLBgFKAAlG1alX345x7K1assDvuuMNZKl555RW34+SPP/5of/3rXyNKxFNPPWWzZs1yFo1PP/3UbV39zTffRCtG94SAEMggAnJDZBBMsRICQiB1BEaMGGFdu3a1Aw880B555BGbNm2ade7c2XbaaScbN26c1a9f3xYvXmznnnuusyZMnDjRrrrqqtQLVE4hIAQSRkDKQsJQKaEQEALZQgC3xJw5c6xx48ZOIdi6datNmTLFKQt9+vSxq6++2jZt2mR33313tqogvkJACMRBQMpCHHD0KHkEvM+ZnGE/c/LcYucIlpPJshYuXGgNGjTIat1jtyr1J9H8+qlzy33OjRs3OrdDw4YNXeEca9as6c7Lly/vYhs2b95sFSrok5X73lGJQsBM/3l6CzKGAEFnw4cPt48//th22WUXO/nkk+3oo4/OGH/PCD82ZuogXXPNNVajRo3grZTOBw8ebPfff79Vq1YtpfzZyMQoe8uWLVa5cuXt2C9YsMDGjx9v3377re25557Wo0cPd2S2QfXq1bdLH76RaLpwvkxfE7/QpEkTV2eOQXrhhResVatWtscee7h+x/VAX69evdrFMmRTKQ3WQ+dCoCwjIGWhLPd+htvOTImWLVvagAEDbPny5ca8+3bt2rlgtkwWxeqBmKSvu+66CNugYPRWBy9Ewtc+U6z7/rk/FjdqDz4P8wxfB3ly7uvo73MM55k+fbpt2LDBjjzyyO3S33fffXbeeefZOeec4xZI8qPxe++91wYNGlQkfZgvZUVLF6xL8Dxa/uDzdM979+5to0aNctMqeZdOOOEE22uvveyjjz5y9SSQEizef/9969Spk2GNuPXWW42FoPbdd990i1d+ISAE4iAgZSEOOHqUHAKMbPlBdevWdXPgURoyPX0T/hUrVtyO7+eff+4E5hdffOEi6zt27OhGowTHValSxU477TRr1qyZkW7+/PnOR87otEuXLk4QY+4O0qJFi+y1114zou0RRvjO4T1v3jw79dRTXVLa9+yzz7r8rGZYXNlkev31143gvN13390JRBY2QgEaOXKkqye+e56dddZZtn79emMGAPXHh3/DDTe4tsMHawOWAUbd1J0jBB8/U4Cll4866ij717/+ZR988IGbfUB7Dz/88O3SMVpfuXKldevWzfFBKGPVIO0bb7xhM2bMcEoLQYfHHnusS5POH4+h54FicOONN7o2426gjyFmQ3gaOHCgP3XxC1prIQKHToRAVhGQspBVeMsec6LVEYQIFoRS2KScKUR++uknN08ffghSougR/P/85z9t2LBhLoL+oosusubNm7sRNsrB888/70aipEPAkw5FZujQoc6sffDBBxepHsF0mLzPP/98e+KJJ1y7EJy4KXCxINBoKzEOiZa9bNkyt6cCUwTJc9tttznTOkJ57NixdtNNNzmlBCUFAY2CgnBGeQDPIFE+igAWljPOOMP2339/Z0lghE69sCx4+uMf/+gEPOX85S9/cTzD6SZMmOAsQj7Pr7/+6pQFFIhJkyY5nFBQENDZJFwSiZIWZUoUKaUTAukhoHUW0sNPuUMIIIwwmbPYDv70bCziRJGMpBEU/ILxBYyusWqgQDRt2tQJRc6xDKAweDrggAOcACYvcRWYuoOENaFevXpuOWNiBY4//ng3MuecqX0ffvihSz558mRnVeAikbKZDsiaAghmzlEYfvjhB8eL+5jXcU3gvsFKURydfvrp9uc//9lZQBiVI+Cj0a677uosIm+++aazSLCmQaLkXTzEo5CPeoqEgBAoWwhIWShb/Z311hLFzoie0Xft2rXd/PhsFIrwY6TNDwHrqVatWv7UCd1Ygi3ockBhCI+WcS8ER7ikWbNmjeONCf6tt95yykedOnWcFYMHiZRNECh1Byd+rEDo3TTg5WMYODKdMBHCjYFFAgUIa0SYKPPSSy+1JUuWOKUp2K5w2uA1igyEBYPYBvizvDMLJomEgBAoWwhIWShb/Z3V1hJwRhCc/+Hzb9GiRdbK9OX4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OlnyTVQNhIAQEAJCQAgIgXQQKFHLQjoVV14hIATKJgKZDpj0KGaLr+evY8kioP5ND38pC+nhp9xCQAjkGIFszJxRtHyOOzHHxal/0wdcboj0MRQHISAEhIAQEAKlGgEpC6W6e9U4ISAEhIAQEALpIyA3RPoYioMQEAJCQAjkGIHffvvNrQQc3tdnp512cqsE57g6pb44KQulvovVQCEgBIRA6UOANXpefvll++6774o07pRTTpGyUASRzFzIDZEZHMVFCAgBISAEcogAq+Lec889RdbqOemkk6xv3745rEXZKUrKQtnpa7VUCAgBIVCqENhxxx0jCgOKQr9+/UpV+/KpMXJD5FNvqC5CQAgIASGQFAIoDI888ojbdDCpjEqcFAKyLCQFlxILASEgBIRAviHA7sSi7CIghLOLr7gLASFQAggQ/BZrk7oSqE7cIguprnEboodFEFi4cGHBvINFKh7jQspCDGB0WwgIgcJDYMuWLfboo4/aqaeean/5y19sypQped2IadOm2c0332yDBg2y5557zubNm5fX9U20cuvWrUs0aYmkA/fhw4cXKXv+/Pn22muvFbmXzsXgwYNt/fr16bDIq7xSFvKqO1QZISAE0kHg559/tkqVKtkzzzxj1157rV199dW2cePGdFhmNe+yZcusSZMmdvnll7vjnXfeaWvWrImUGc/qEM1y4tMHnwXPYeyvg8do55FK/C+PT+Pv+2uO/pxnq1atsscee6zIPZ8mmM7zKYkjuE+cONEmTZoUKX716tW2YMGCyHWsE98G3ybSBc/D+Xz6aPfjPQunL+nr8oMGDRq0YcOGkq6Hys8SAlWrVs0o52y8K9QxG3wz2nAxSxmBXL6DNWrUsAMOOMAqVKhgBL69++67tt9++9muu+4at/4l9Q7OnTvXypcvbwceeKDtvvvutnjxYtu8ebM1atTI5syZY0OHDjVGwVWqVLE99tjDWIhoxIgR9tlnnzlLxIoVK1zaypUr29atW23YsGH20ksv2cyZM61evXpOcfrrX/9qnTp1irT/tttus4MPPtgefPBBp5gwwn7vvffcFMSnnnrKxowZYz/++KPtv//+Lg9l3Hffffb666+7kfLee+/tggnvv/9+d01+6rjLLrsYCyIxov7qq69s9uzZrk0smkSaV1991WbMmGEtW7a0TL8TkcbFOAn3L7jzXowe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" /&gt;&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_f67a20dd-70e4-406b-935d-8613e5edb703" name="Applicant Data" typeRef="Applicant_Data"/>
+  </semantic:inputData>
+  <semantic:inputData id="_f14cc15c-971a-405c-9b07-cd3d35bcac5c" name="Requested Product" triso:displayName="Requested Product">
+    <semantic:description>&lt;p&gt;This is the data collected from the applicant about the profile of the loan they want:&lt;/p&gt;
+&lt;p&gt;&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVAAAAB0CAYAAADTompNAAAgAElEQVR4Ae3dBZRkxdk38MobJSHBbdHFZYGFxS24Q7DFI8hJgBCCBQIJCwQ5wSXBgkMgQIDgsrjt4s7i7g4hQaLf+dX7Pftemp7d6dmeme6eqnO67711S/9V9a+nnqpb9aX33nvvv6mYjkLgv//9b/rGN76RvvnNbzYtX8L88MMPk2uzzJe+9KX0ne98J/31r39tarjNSl8Jp+cIqCff/va305e//OVcb3oeUmv7/EprJ6+krhYBpKNSulaNCvuvf/2ralXuCwIFgV5GoBBoLwPczOCR5meffZZefPHFL0hsX/3qV9PMM8+c/ud//qeZUZawCgJfQEA9/MpXvkgd//nPf9K///3vL7jvZIsvotDJuW3zvKm4n376aTryyCPTU089lb7+9a/nHLFbZpll0r777psl02YOs9scspL8JiOgDlK5vPrqq5/rrJGnIfsMM8zwhc69yUloqeAKgbZUcYw7MSrpZJNNlnbfffe03377jZVEF1poobTTTjulr33tawNOAhg3YuVtsxGgPnrttdfSXnvtlf7+979ndZIO+x//+Efaaqut8m8gqZLKeK/ZNayXwzNEmmeeedIBBxyQZpxxxjR06NC0//77p+mmm66QZy9jX4JPWc8+77zzpp133jkP4z/55JP08ccfp7XXXjttttlmA64OfqnMwrdns6CDMowyjJ9yyik/N4FEIiiz8O1Zru2SaqOd66+/Ph1yyCFppZVWSrvsskuWRo2SGHWwzMK3S2kOwHQaJg0aNChX1IE0ZBqARd2SWTZkX2GFFdIss8ySRz+G9kGeLZngXkpU0YH2ErB9EexAm/HsC0x7EoeJFWagTd6pf7POOmsetg9E8lTmhUB70mKKny4RsJyK+ec//9mlm/58YZlXdQmOhj8hEjzy/Nvf/paHrxNNNFHDJMp/LfFKI4muarhDWK3WaTaCnTz5RX4j78IIu2qeu7oPf12970v7QqB9iXYHx6VSh17svffeS+utt15DjaIvoEGcTz75ZLr99ttzdJNMMklaeOGF0+DBg3tMTPJ8ySWXpGmnnTatscYaeTa6u3mBGfJAmO4ZBPPyyy+nkSNHjn1GmjqkRRddNA0bNqzHae1uunrDHezh/uijj+YOTD4j73Dr7iRoPcx6I73dDbPMwncXqeKuSwRUapLccccdl0aMGJEJpUoKXXrs4xcarQb8zDPPpLnmmiuZQTYJ8vjjj49t1Bq6nzzJA4maP9cgOcn2zB0CJYGaifY+/EbWqs/uw597mJ177rmZEMXBkMRIsobG1lTeeuut+ZPcOeecM00++eSfW3sZkmrEG2FX0+qd58gDP/1h5HWKKaZI8mGC86abbkqzzz577rw8wyPwiTR6Dsyr9+eff34uO3b9bfo/Bf2NQIm/KQhYzP+tb30r7bHHHumKK65oOemzmknktPLKK2cy+uijj9Ldd9+dG/PNN9+cSKVI63vf+16aZpppcmfw1ltv5SVjlurE/gIkxAcffDB//SUMjZlERRpddtllM9nB5LLLLsuz1JNOOmmWfq+55prE/XLLLZeJ9/LLL8/PJMsll1wykyqiXGWVVTJJSMtSSy2Vl67deOON6e23306LL754xvf555/P5L/gggumJ554IpO4K4laWq3QQFxXXnlldme1hpGB2XH2fWnEN/fccydpfeyxxzJ28sgebnB5+OGHE5w22GCD/MGIvK+//vqZcK+99tq82uTNN99MMHv33XfTIosskj8g6U+1Rv90R31ZciWuXkeA1IRYfvzjH2cC6s8K3Z3MSq+Gi8iQ41RTTZU/kT3rrLPSPffck4fiU089dTr22GMzMW644Ybp/fffT6eeemqWOG+77bZ09dVXp7XWWitLiQ899FAmY/n2TrikKMNukpYZ69dffz397ne/S/PNN19ad9118woK63h9GLH88stnAg89oCs//Eunqx9p98ILL8yEg7ClgfTrR/onySEfBHXxxRdnSfbSSy9NjzzySNp0000z6f7hD38YK9V1B6tmuoGPfCHMyKPwdUajR49OG2+8cZp44okzTspEB4E4fXWHYGeaaaaMm3c6INIsfPrTFAm0P9HvoLg1CN/p93eFHh+khrN33nlnJrkPPvggSzWW45AWkd4mm2ySpp9++vT000+nd955J/3yl7/MxKTR+vqGHf+rrrpq1p/KN5JEcEx1qOk5htX0f9QG9H3hlhRFaieZcTeujgfpLLDAAplASZmzzTZbevbZZ7OERudsHwQSHZLdcsstMwlttNFGadSoUdmfjsIQGiEhePFKe38b9QV+8gNb0jHs5Wm77bZLhx56aLruuuvSNttsk0cEMOIGebrCpT9NIdD+RL/E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Ln/ttdcyqajInW40TCdlkqLmn3/+LI06U36aaaZJl112WXr00UfzeegrrbRSWmaZZdIll1ySbrzxxvyd+Morr5yGDRuWpTNSLBXAeuutl2afffaxEmwn4KceTDzxxEknc/bZZ+dZ/JhoCkL84x//mGf41SHEeN5556Vll102+a7+mmuuyVenkzpTfrnllsunlL788stpscUWS+uvv34mSfHA96mnnsruN9lkk1wOwlMWDz/8cFY3wXieeebJnR/J9d13301vvPFG2nbbbfPEWHfqbeeLB51Q89ogDyrbZ599liswEtDbI5TuVMI2yF63kmhITpXhnHadyqyzzpqvcNhuu+3S8OHDM3HYPEWDHzRoUNpyyy3TkCFD0siRI7O/nXbaKRPs73//+zzEr0pg3UpECzuSl08//TTnz1dLf/7znz/3SSgpUN0xs++e8fzRRx9lHA3/6dl33HHHhDRJ+cj4+9//frryyivT888/nzsfZMidhf06sJNPPjlLno6ENlL4+c9/ntVLJ554Yvrkk09yfKeddlqafvrp01ZbbZVJt7v1tkigLVzh2i1pdFxvvvlmOvjgg3Mln3TSSfNwqt3y0ZP0GvZddNFF6YYbbshSjIXmk08+ee5IpphiiiyBIleSqt2JzF5r5Bo4iXP06NH5euedd+bdqd55551Egu80KRROJEFEtddee2XpEiZh3Ad5svOMePkjdZLe4Wm0Q8K0qJ/xjgTpCtPll18+0UUj2HvuuSd/NTVq1Khk60QYKwufpL7yyis5fOGsssoqub52lzzFWyTQDH/5m1AEVHSNfvfdd08mCNZZZ50BQ56w08g32mij/IUOSebtt9/OBHn33XenY445JjdYjddQFRlEIw1C8UWPYSpy0RFZmI4owt2Elk8r+ZcnRLfBBhtkVY+8h6QNj+p95J99rG7gHskGXtwE6XIXJBz23hkR0I2GH52XDwCmnnrqjLkODfYRX3fx+j/q766P4q4gUIOACoow9txzz0THZwbeMFVDiIpd46XjHjVcjXLKKafMQ/Uzzjgj6/Juu+22rGfbbLPNshRqOAoXRAojZDDRRBOlmWeeOd/reDRkQ90g204CC04MMqP7pe649tprc51RV+SZ5I0EX3jhhSwhRh0Kv4FHleziHf/0mPwutNBCeXKKO+VClQLvwJjKSZnxWw0rwu/OtRBod1Aq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" /&gt;&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_287273ea-731a-4402-bc69-600555e202b7" name="Requested Product" typeRef="Requested_Product"/>
+  </semantic:inputData>
+  <semantic:decision id="_524d9bbe-92ab-4387-acba-856e7b705023" name="Application Risk Score" triso:displayName="Application Risk Score">
+    <semantic:description>&lt;p&gt;The decision logic for this decision is a decision table using a collection sum aggregation method. (Every row that is true contributes the result value (Application Risk Score column value) to a total sum representing the value returned for the decision.)&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_81b84f49-bf9e-444a-a2a9-d4fecec6d57d" name="Application Risk Score" typeRef="feel:number"/>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_0af2d672-97ae-477e-a9de-4affcaa39f17"/>
+    </semantic:informationRequirement>
+    <semantic:authorityRequirement>
+      <semantic:requiredAuthority href="#_f3c50f21-9d7e-4a3c-87cf-b79586d66e4e"/>
+    </semantic:authorityRequirement>
+    <semantic:decisionTable aggregation="SUM" hitPolicy="COLLECT" id="_1f02491f-08c4-4aec-a478-b7316a717f69" outputLabel="Application Risk Score">
+      <semantic:input id="_ac886cb0-2dcb-456f-99cb-98db99662f81">
+        <semantic:inputExpression typeRef="feel:number">
+          <semantic:text>Applicant Data.Age</semantic:text>
+        </semantic:inputExpression>
+        <semantic:inputValues triso:constraintsType="simple">
+          <semantic:text>(18..120)</semantic:text>
+        </semantic:inputValues>
+      </semantic:input>
+      <semantic:input id="_8be9130b-61ba-4b48-8c65-d82741a00391">
+        <semantic:inputExpression typeRef="feel:string">
+          <semantic:text>Applicant Data.Marital Status</semantic:text>
+        </semantic:inputExpression>
+        <semantic:inputValues triso:constraintsType="enumeration">
+          <semantic:text>"S","M"</semantic:text>
+        </semantic:inputValues>
+      </semantic:input>
+      <semantic:input id="_e352bf3d-d2cd-4a5e-ac9a-de73cff31341">
+        <semantic:inputExpression typeRef="feel:string">
+          <semantic:text>Applicant Data.Employment Status</semantic:text>
+        </semantic:inputExpression>
+        <semantic:inputValues triso:constraintsType="enumeration">
+          <semantic:text>"Unemployed","Employed","Self-Employed","Student"</semantic:text>
+        </semantic:inputValues>
+      </semantic:input>
+      <semantic:output id="_7113a93c-b9fb-40e9-80ec-f0c252510faf"/>
+      <semantic:rule id="_40ab6de7-4d28-4a0e-84a5-395d0f2e65d2">
+        <semantic:inputEntry id="_e326df47-8cce-4326-85ad-e9785498f16b">
+          <semantic:text>[18..21]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_4d1ead29-2cbd-4a10-a314-958641010f42">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_c12ddf6c-fc92-41cb-98f9-ffefbe3c9606">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_bec73116-485e-4a46-9005-18acee108a7d">
+          <semantic:text>32</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_2a0e4622-cfa3-4699-b05f-d6716ccfac79">
+        <semantic:inputEntry id="_62c42ac0-4af7-483c-aee4-cd2a0413fb20">
+          <semantic:text>[22..25]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_d72bc0aa-456f-4e9e-af01-17542ebdeb38">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_0f8469ca-cbd3-4bf2-8746-f4fbc95385e9">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_e8c4ec14-a09c-4d50-96ed-ae0a42616384">
+          <semantic:text>35</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_33d53491-4a63-4728-8377-7336cfd6c729">
+        <semantic:inputEntry id="_c8a9ca2b-f70f-4f34-914e-d13895aca22b">
+          <semantic:text>[26..35]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_429f24c3-3a6c-411e-91d8-0229bd6fb658">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_421a556c-a11d-4d47-8f2b-b8776b6cd864">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_23e70f85-61f8-4e4c-aec8-f7223cc0c4eb">
+          <semantic:text>40</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_5bf26686-96d8-4514-ac9f-185c92677315">
+        <semantic:inputEntry id="_0b3c0246-6e4a-40c9-8987-f24271a5b9e7">
+          <semantic:text>[36..49]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_ffdedf68-e485-43ce-889a-36249ff7e049">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_c368ae88-be91-4cfc-b348-c241039d9f21">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_d014b21c-e03b-4cf4-8f1c-17baed3cc138">
+          <semantic:text>43</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_e7ca0103-e41e-45a5-8858-dc1a9ffe6ebb">
+        <semantic:inputEntry id="_fbb34eca-71f5-44b3-a1a5-4cb50a909292">
+          <semantic:text>&gt;=50</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_53256ea3-be69-4138-b8de-cb8e8495e7df">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_13026288-0fd9-4c77-97b6-f6d36bfa2b00">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_ad0bf89d-d6b6-41ca-9608-cc6065870f8e">
+          <semantic:text>48</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_474c81cf-1a6d-4812-947e-aec2b340e59f">
+        <semantic:inputEntry id="_fcf2044a-b240-48c6-b80e-4589d92590b9">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_33829dbe-097e-47b7-8755-e1984e5b7d96">
+          <semantic:text>"S"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_0860d870-00c2-4092-9e88-c21bbf896ded">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_25718d45-baa8-4cf6-b685-a7f31fdc45ea">
+          <semantic:text>25</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_f67efb4b-7d7c-4852-9903-d211eebbca17">
+        <semantic:inputEntry id="_dc2d3578-a554-47b0-9fb0-26c86034a8ef">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_22da24bd-1980-43c2-a809-61b205150c4b">
+          <semantic:text>"M"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_c71452f7-c0da-48bf-bbd8-badad56813be">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_ebb64935-09e7-4d0f-a902-244dafb0c2de">
+          <semantic:text>45</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_1d512bc5-9b54-47cb-83be-6a7a58cf7b60">
+        <semantic:inputEntry id="_857337a0-d5e1-4749-8716-4735eacc718b">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_059c658e-5748-499c-a908-f218bc8225ed">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_e3d99d69-ee14-47fc-859c-0e9fd2c00398">
+          <semantic:text>"Unemployed"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_9fb78418-bb4a-49ab-8388-4d2dba0b8a60">
+          <semantic:text>15</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_a965f313-2d51-4ea9-8e1e-8933ea8bcb9d">
+        <semantic:inputEntry id="_b707739f-fa54-49b9-9a76-92bf8150a533">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_ffec557c-bd58-4880-a088-5232781f6a00">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_31b2d950-4571-4356-a189-12a29ed3369e">
+          <semantic:text>"Student"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_8180b1fa-9437-4c1e-b6d0-620669f37b6d">
+          <semantic:text>18</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_1b5daf24-0d35-4f1e-b38c-fdf44eec02f8">
+        <semantic:inputEntry id="_2c724fa0-ef38-450a-a0f1-9620e0d2c072">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_933ddfc1-4d5a-447a-8fd0-de67ee218e6d">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_7cf9f6ce-0344-4163-9eff-ec79d4a936d0">
+          <semantic:text>"Employed"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_0278a87a-c135-4e48-b5a9-1c1366f2c064">
+          <semantic:text>45</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_a3e9d9ea-8002-40ab-9d3a-d8f51bc15dc6">
+        <semantic:inputEntry id="_50af98d6-b5ed-4ff3-910d-4509b29990d8">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_474d14c5-63c5-4ad6-a9a6-bb20ce128830">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_6797a711-ecb9-4803-8d26-fca72d1f724c">
+          <semantic:text>"Self-Employed"</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_2e10b747-17e7-4c25-9934-0dd9bcc1d4b1">
+          <semantic:text>36</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+    </semantic:decisionTable>
+  </semantic:decision>
+  <semantic:decision id="_d174ec00-d1ad-4a02-81a8-d1099c12a55d" name="Risk Category" triso:displayName="Risk Category">
+    <semantic:description>&lt;p&gt;The decision logic for this decision is a unique-hit decision table that returns Risk Category and Credit Contingency Factor.&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_9d0b9d05-c9bc-4a8b-9159-aa6e8c263b47" name="Risk Category" typeRef="Risk_Category"/>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_8543b5af-f613-4ae3-9af5-9dfd3e08da5a"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_0af2d672-97ae-477e-a9de-4affcaa39f17"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredDecision href="#_524d9bbe-92ab-4387-acba-856e7b705023"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_f14cc15c-971a-405c-9b07-cd3d35bcac5c"/>
+    </semantic:informationRequirement>
+    <semantic:authorityRequirement>
+      <semantic:requiredAuthority href="#_276f097e-f0a6-407d-8ff4-6872c3690a38"/>
+    </semantic:authorityRequirement>
+    <semantic:decisionTable hitPolicy="UNIQUE" id="_31dd679d-9e80-4e3e-a78e-87502cf9f6b9" outputLabel="Risk Category">
+      <semantic:input id="_9e32bd29-2e3b-492d-91f7-3fbbe179f6cb">
+        <semantic:inputExpression typeRef="feel:boolean">
+          <semantic:text>Applicant Data.Existing Customer</semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:input id="_126a171c-e56d-412b-af1a-c1c7acffadd5">
+        <semantic:inputExpression typeRef="feel:number">
+          <semantic:text>Application Risk Score</semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:input id="_cba7d936-ca27-4382-94d0-516399dcc787">
+        <semantic:inputExpression typeRef="feel:number">
+          <semantic:text>Bureau Data.Credit Score</semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:output id="_f4138d1c-d2b6-41d1-b21e-b99a81b95657">
+        <semantic:outputValues triso:constraintsType="enumeration">
+          <semantic:text>"High","Medium","Low","Very Low","Decline"</semantic:text>
+        </semantic:outputValues>
+      </semantic:output>
+      <semantic:rule id="_f71ed3bb-f850-4c07-a87b-6f7545622586">
+        <semantic:inputEntry id="_f231b328-f8eb-4564-bdb2-722773ad1d14">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_70ed4be6-5afb-408e-84ba-c4023ac55b78">
+          <semantic:text>&lt;120</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_a748f8a7-aac9-4de3-9f01-4abb7077c604">
+          <semantic:text>&lt;590</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_0130d5c6-1055-48a8-9789-25752dbd5b89">
+          <semantic:text>"High"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_9896bad8-41c1-4a1a-831a-62e89147008a">
+        <semantic:inputEntry id="_01c12323-8296-4686-bdde-23463d0c0ee7">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_8e667b88-e7de-464b-8f4f-09e63fc747d0">
+          <semantic:text>&lt;120</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_6c9c797c-9e08-4e9e-a49f-d2f2cc587ae5">
+          <semantic:text>[590..610]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_1f89dd60-298d-43cc-b0c1-dc5af561ca55">
+          <semantic:text>"Medium"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_6beb0439-f20e-406a-832b-2566ed3491bf">
+        <semantic:inputEntry id="_e9af0e79-de4c-4158-a5f2-db96000e6460">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_e163cc9d-8af2-4d99-b38e-2b645187396c">
+          <semantic:text>&lt;120</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_8957bcda-8ab2-4033-8667-2a9d248945fa">
+          <semantic:text>&gt;610</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_91db07c7-d728-456f-8c7a-e3ff662edb7c">
+          <semantic:text>"Low"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_c1a9d43a-ea3e-4f4c-b3da-0334b64664b1">
+        <semantic:inputEntry id="_90023c89-6f52-4fe0-879c-414ebe0a8c01">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_eb5925ee-9ead-4452-8da2-bf1375156a34">
+          <semantic:text>[120..130]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_22259ca0-79b0-481f-afc2-a44e8c8f2b3b">
+          <semantic:text>&lt;600</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_7d901c7a-3872-4409-a8f4-19bf3192bb4a">
+          <semantic:text>"High"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_171248ca-e309-47b3-88bc-785b381681dc">
+        <semantic:inputEntry id="_5848361c-22d6-4cc2-83f4-596797763d7c">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_2aaf6b9d-6fd3-47b0-bfbf-2db0636dd787">
+          <semantic:text>[120..130]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_7d4ac1e4-14cb-4cf8-97f1-793eb022791b">
+          <semantic:text>[600..625]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_34da8ad3-1ec0-43fb-bf6d-daf9342bc479">
+          <semantic:text>"Medium"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_00bb2eab-2096-4714-ac01-3236a35a7e91">
+        <semantic:inputEntry id="_6ff10609-b409-4378-9619-1b7b473f00be">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_09572053-96e9-4573-a158-4d4550c9e56b">
+          <semantic:text>[120..130]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_cf7e52d2-e35b-4f1a-8948-383738c1652b">
+          <semantic:text>&gt;625</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_3c3e8d90-345a-4ff9-a232-55843eb9715f">
+          <semantic:text>"Low"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_dd18237f-ead8-4698-9841-071d1ab8f486">
+        <semantic:inputEntry id="_b256caae-2595-44e8-aa03-ba80105a2ebc">
+          <semantic:text>false</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_ac26fb3c-2287-4ebd-844a-aad991c2a07d">
+          <semantic:text>&gt;130</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_53865db7-391b-47a0-8458-bab3a8cc309d">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_dfedcfce-b137-411f-8197-aef63e71a967">
+          <semantic:text>"Very Low"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_7583985c-dbd3-4961-8c2a-8c3477bfad5f">
+        <semantic:inputEntry id="_04938c8f-07eb-47f1-9593-cedd4098a1b0">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_2f07cbc9-f63c-43a7-811f-0196de0b8375">
+          <semantic:text>&lt;=100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_9cfa5fe8-623b-41e5-aaf9-207f5194ac11">
+          <semantic:text>&lt;580</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_a36e682f-e5c1-40fb-83ff-5738611a19c1">
+          <semantic:text>"High"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_0916e04a-9c8f-4a33-90fa-79183329be57">
+        <semantic:inputEntry id="_a6240cfe-a58c-4093-873a-0a1e10d3cadb">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_243fcf95-5d62-47e9-ba37-81a931baaa4c">
+          <semantic:text>&lt;=100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_6bffbe01-8b3a-4418-855a-a5a842a63dfe">
+          <semantic:text>[580..600]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_b2dfe60d-262e-417b-9322-098c058fd95e">
+          <semantic:text>"Medium"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_142952e1-adda-49a8-aed2-c0fc821e2592">
+        <semantic:inputEntry id="_acea8bbb-c3c5-4e67-8e0f-4859bb1e1578">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_0d41fa7b-3b7d-435a-845f-3d23d93f7d91">
+          <semantic:text>&lt;=100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_4119119d-7a90-4089-b348-8cc89c618900">
+          <semantic:text>&gt;600</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_4985fff6-cae8-4fc7-8ecb-3dbd46161c22">
+          <semantic:text>"Low"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_ab3d90e3-2004-4b5c-b33d-6455d9e575a3">
+        <semantic:inputEntry id="_298a1628-7859-445a-a5c0-358d87edbc1f">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_c1b2ddee-15e2-4543-8a75-cc31db0d7b59">
+          <semantic:text>&gt;100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_cf99edf2-ed7a-4878-90c5-0eae91b103fe">
+          <semantic:text>&lt;590</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_08524949-cb4d-4986-b82c-52d750838d87">
+          <semantic:text>"High"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_6967e188-88c2-4380-aa70-e340b0434de8">
+        <semantic:inputEntry id="_86a7bfc1-7c71-4dff-8bd3-7bb3938e4e60">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_52cec9af-fece-4220-957d-c4baf5c36cb8">
+          <semantic:text>&gt;100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_5d6f7056-efea-43fd-bbe7-87b5b54acaf6">
+          <semantic:text>[590..615]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_d78e0576-a14e-42ed-b9e2-ecd9b991b865">
+          <semantic:text>"Medium"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+      <semantic:rule id="_83ffb2af-707d-47b8-80d4-dc4a3ee3b3d3">
+        <semantic:inputEntry id="_d82188d4-77d6-4863-bfad-6eb3f74a9f1d">
+          <semantic:text>true</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_843f1e9f-464d-4d6e-b5a0-f5e851761c46">
+          <semantic:text>&gt;100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_ab5d303f-f05e-4722-b2da-78f96af56572">
+          <semantic:text>&gt;615</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_ed38c32c-4df4-45a2-8f08-694c84161fb4">
+          <semantic:text>"Low"</semantic:text>
+        </semantic:outputEntry>
+      </semantic:rule>
+    </semantic:decisionTable>
+  </semantic:decision>
+  <semantic:knowledgeSource id="_4e0c1645-feb0-4758-ba93-7d10556b9cbb" name="Product Specification" triso:displayName="Product Specification">
+    <semantic:description>&lt;p&gt;This represents the institution's inventory of loan products.&lt;/p&gt;</semantic:description>
+  </semantic:knowledgeSource>
+  <semantic:knowledgeSource id="_5dbdc55d-83e2-4b51-a485-2762664dd21c" name="Affordability Spreadsheet" triso:displayName="Affordability Spreadsheet"/>
+  <semantic:knowledgeSource id="_276f097e-f0a6-407d-8ff4-6872c3690a38" name="Risk Manager" triso:displayName="Risk Manager">
+    <semantic:description>&lt;p&gt;Risk Category and Credit Contingency Factor are based on Lenders research and analysis from Risk Manager.&amp;nbsp;&lt;/p&gt;</semantic:description>
+  </semantic:knowledgeSource>
+  <semantic:decision id="_dd89de89-3253-400b-ad82-1c7f8c361b25" name="Affordability" triso:displayName="Affordability">
+    <semantic:description>&lt;p&gt;Invokes Affordability Decision calculation defined in the input BKM "Affordability Calculation"&amp;nbsp;&lt;/p&gt;</semantic:description>
+    <semantic:variable id="_bc3d25c6-b931-4f47-95e1-3863b7dc77ea" name="Affordability" typeRef="feel:boolean"/>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_0af2d672-97ae-477e-a9de-4affcaa39f17"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_f14cc15c-971a-405c-9b07-cd3d35bcac5c"/>
+    </semantic:informationRequirement>
+    <semantic:informationRequirement>
+      <semantic:requiredDecision href="#_d174ec00-d1ad-4a02-81a8-d1099c12a55d"/>
+    </semantic:informationRequirement>
+    <semantic:knowledgeRequirement>
+      <semantic:requiredKnowledge href="#_f57c797e-1dc9-42c5-9db6-4e0ae6b27e31"/>
+    </semantic:knowledgeRequirement>
+    <semantic:invocation id="_700d2c92-302b-4da5-becf-13b1da126716">
+      <semantic:literalExpression id="literal__700d2c92-302b-4da5-becf-13b1da126716">
+        <semantic:text>Affordability Calculation</semantic:text>
+      </semantic:literalExpression>
+      <semantic:binding>
+        <semantic:parameter id="_5a6b0b9c-6538-4cce-a031-5f6dd2354374" name="Requested Product"/>
+        <semantic:literalExpression id="_89092913-6962-4fea-ac95-8ec415797ae2">
+          <semantic:text>Requested Product</semantic:text>
+        </semantic:literalExpression>
+      </semantic:binding>
+      <semantic:binding>
+        <semantic:parameter id="_4ad1ae7a-9304-4710-b3c7-20cbbb7ec1a1" name="Applicant Data"/>
+        <semantic:literalExpression id="_b0c92456-57ce-4c1c-b52b-ce83f6baa2b3">
+          <semantic:text>Applicant Data</semantic:text>
+        </semantic:literalExpression>
+      </semantic:binding>
+      <semantic:binding>
+        <semantic:parameter id="_79d369e2-841b-46e4-8bce-f09e6a195254" name="Risk Category"/>
+        <semantic:literalExpression id="_3564b1de-b001-4cd9-add8-bac207e8f54d">
+          <semantic:text>Risk Category</semantic:text>
+        </semantic:literalExpression>
+      </semantic:binding>
+    </semantic:invocation>
+  </semantic:decision>
+  <semantic:knowledgeSource id="_f3c50f21-9d7e-4a3c-87cf-b79586d66e4e" name="Analytics" triso:displayName="Analytics">
+    <semantic:description>&lt;p&gt;The source of this knowledge is fundamental research into the factors that determine how risky a loan is based on certain loan-applicant personal data. In this case, Age, Marital Status and Employment Status.&lt;/p&gt;</semantic:description>
+  </semantic:knowledgeSource>
+  <semantic:businessKnowledgeModel id="_f0777261-66b3-479d-a8f7-2e3ccc63a5df" name="PMT" triso:displayName="PMT">
+    <semantic:description>&lt;p&gt;This function computes a&amp;nbsp;Payment (PMT) on a loan and shows the power of creating common calculations and other decision logic in callable functions that can be reused throughout the organization's decisions.&lt;/p&gt;
+&lt;p&gt;It uses as input parameters loan amount, interest rate and term of loan. It returns a monthly payment.&lt;/p&gt;
+&lt;p&gt;Since this is a very common calculation in the lending business, this BKM will likely be reused in many decisions.&lt;/p&gt;</semantic:description>
+    <semantic:encapsulatedLogic xmlns:drools="http://www.drools.org/kie-dmn/1.1" drools:kind="F" id="_be69fe00-c0c1-411c-b79a-052dae67c36c">
+      <semantic:formalParameter id="_5c9db821-64bb-4904-b9a0-5fe9b1bebdb4" name="p" typeRef="feel:number"/>
+      <semantic:formalParameter id="_c960fe4c-7d66-49ec-b818-4ea9c051cf57" name="r" typeRef="feel:number"/>
+      <semantic:formalParameter id="_d4d1bbfe-cc80-4544-aa42-c83fb9a1be56" name="n" typeRef="feel:number"/>
+      <semantic:literalExpression id="_fadafcab-622e-4fec-b7fe-81e19b5266d1">
+        <semantic:text>(p*r/12)/(1-(1+r/12)**(0-n))</semantic:text>
+      </semantic:literalExpression>
+    </semantic:encapsulatedLogic>
+    <semantic:variable id="_6123b4f1-eefb-4f84-90b9-a7a61926ce3a" name="PMT" typeRef="feel:number"/>
+  </semantic:businessKnowledgeModel>
+  <semantic:businessKnowledgeModel id="_a5d6f188-cdce-40f8-9ee9-f99863e00680" name="Loan Fee" triso:displayName="Loan Fee">
+    <semantic:description>&lt;p&gt;This decision table is used to determine the institution's loan fee amount based on the Loan type.&lt;/p&gt;</semantic:description>
+    <semantic:encapsulatedLogic>
+      <semantic:formalParameter name="Loan Type" typeRef="Product_Type"/>
+      <semantic:decisionTable hitPolicy="UNIQUE" id="_60c22198-2ecf-46fe-98c0-074eef3040d1" outputLabel="Loan Fee">
+        <semantic:input id="_811668d2-3379-48da-b49d-8518c449733f">
+          <semantic:inputExpression typeRef="Product_Type">
+            <semantic:text>Loan Type</semantic:text>
+          </semantic:inputExpression>
+          <semantic:inputValues triso:constraintsType="enumeration">
+            <semantic:text>"Standard Loan","Special Loan"</semantic:text>
+          </semantic:inputValues>
+        </semantic:input>
+        <semantic:output id="_3bdef0fc-036b-4ebf-82ce-60c3af4f20fd"/>
+        <semantic:rule id="_b9e1a7fa-bf6f-44a4-aa50-bc2f5bcda82d">
+          <semantic:inputEntry id="_55080c88-0a04-4c39-9b4a-36950be5c3aa">
+            <semantic:text>"Standard Loan"</semantic:text>
+          </semantic:inputEntry>
+          <semantic:outputEntry id="_bbde472b-28c3-4ab8-83fb-809bb7946f2e">
+            <semantic:text>20</semantic:text>
+          </semantic:outputEntry>
+        </semantic:rule>
+        <semantic:rule id="_7c0ab7be-39f9-42da-bd29-a0c7cde3470a">
+          <semantic:inputEntry id="_5f00a5c5-836f-4006-b53a-46e6aa94955d">
+            <semantic:text>"Special Loan"</semantic:text>
+          </semantic:inputEntry>
+          <semantic:outputEntry id="_156a434a-0637-4d57-9de5-204b5244b92e">
+            <semantic:text>25</semantic:text>
+          </semantic:outputEntry>
+        </semantic:rule>
+        <semantic:rule id="_ea4b7f44-9a32-4490-80d6-157bc9f3d5dd">
+          <semantic:inputEntry id="_8e88fe2d-7237-43cc-b6c8-53db0b341f44">
+            <semantic:text>not("Standard Loan","Special Loan")</semantic:text>
+          </semantic:inputEntry>
+          <semantic:outputEntry id="_48751f9e-ae8d-4fb8-96fc-c7df893618cc">
+            <semantic:text>0</semantic:text>
+          </semantic:outputEntry>
+        </semantic:rule>
+      </semantic:decisionTable>
+    </semantic:encapsulatedLogic>
+    <semantic:variable id="_c63a6a67-64f0-4644-8bce-849a848bea15" name="Loan Fee" typeRef="feel:number"/>
+  </semantic:businessKnowledgeModel>
+  <semantic:businessKnowledgeModel id="_669ee08b-9ca4-41f7-9aba-578c45042fe8" name="Contingency Factor" triso:displayName="Contingency Factor">
+    <semantic:description>&lt;p&gt;This decision table is used to convert a Risk Category into a numeric Contingency Factor used by the Affordability Calculation.&lt;/p&gt;</semantic:description>
+    <semantic:encapsulatedLogic>
+      <semantic:formalParameter name="Risk" typeRef="Risk_Category"/>
+      <semantic:decisionTable hitPolicy="UNIQUE" id="_e6a67d9e-c0fe-4c9a-86d6-0385618817ee" outputLabel="Contingency Factor">
+        <semantic:input id="_473c7bc3-79ef-4841-a26a-b7709e5b789e">
+          <semantic:inputExpression typeRef="Risk_Category">
+            <semantic:text>Risk</semantic:text>
+          </semantic:inputExpression>
+          <semantic:inputValues triso:constraintsType="enumeration">
+            <semantic:text>"High","Medium","Low","Very Low","Decline"</semantic:text>
+          </semantic:inputValues>
+        </semantic:input>
+        <semantic:output id="_275afd26-91f2-49d1-bc06-7a5d62c3d89b"/>
+        <semantic:rule id="_6596c6bc-ce63-449b-9733-bbd801834644">
+          <semantic:inputEntry id="_a29f0de5-5d38-4125-ac47-20fc69075120">
+            <semantic:text>"High", "Decline"</semantic:text>
+          </semantic:inputEntry>
+          <semantic:outputEntry id="_5ddf370b-5a69-4f0c-bf3b-04d8aa6844f2">
+            <semantic:text>0.6</semantic:text>
+          </semantic:outputEntry>
+        </semantic:rule>
+        <semantic:rule id="_8f7cd37c-7785-4457-bce7-f1c82c1712d7">
+          <semantic:inputEntry id="_fbd25567-6064-4b12-92dc-5a92e314a84c">
+            <semantic:text>"Medium"</semantic:text>
+          </semantic:inputEntry>
+          <semantic:outputEntry id="_65c66858-d602-4730-a089-be300d3bacde">
+            <semantic:text>0.7</semantic:text>
+          </semantic:outputEntry>
+        </semantic:rule>
+        <semantic:rule id="_b2aae0fd-bcae-4425-8321-8605991d6160">
+          <semantic:inputEntry id="_3c5269f2-7488-41b1-b2d5-b03e2d6412fd">
+            <semantic:text>"Low", "Very Low"</semantic:text>
+          </semantic:inputEntry>
+          <semantic:outputEntry id="_ffe849a5-c018-4703-a9e1-1afa01cf93ac">
+            <semantic:text>0.8</semantic:text>
+          </semantic:outputEntry>
+        </semantic:rule>
+      </semantic:decisionTable>
+    </semantic:encapsulatedLogic>
+    <semantic:variable id="_89bd6635-9f94-4659-aaae-25c0986e69f4" name="Contingency Factor" typeRef="feel:number"/>
+  </semantic:businessKnowledgeModel>
+  <semantic:businessKnowledgeModel id="_f57c797e-1dc9-42c5-9db6-4e0ae6b27e31" name="Affordability Calculation" triso:displayName="Affordability Calculation">
+    <semantic:description>&lt;p&gt;This boxed expression logic invokes&amp;nbsp;common functions in BKMs (PMT, Loan Fee and Contingency Factor, calculates variables Required Monthly Installment and Monthly Disposable Income from FEEL expressions, and ends in a comparison expression that returns true or false.&lt;/p&gt;</semantic:description>
+    <semantic:encapsulatedLogic id="context_context_context__c1de2ef9-34a1-43b5-8b7b-66b6b6835f3d">
+      <semantic:formalParameter id="_0bb33cec-ef91-455f-bc64-f7d99e2b68c3" name="Applicant Data" typeRef="Applicant_Data"/>
+      <semantic:formalParameter id="_4045ef6a-4ed2-4173-955d-b1b1937cc869" name="Requested Product" typeRef="Requested_Product"/>
+      <semantic:formalParameter id="_7c9b5fd5-94fe-4d0b-85ce-4d0d72051a54" name="Risk Category" typeRef="Risk_Category"/>
+      <semantic:context id="context_context_context_context__c1de2ef9-34a1-43b5-8b7b-66b6b6835f3d">
+        <semantic:contextEntry>
+          <semantic:variable id="_f2cfef5a-05a7-46a4-94ff-e8413b73ace0" name="Monthly Fee" typeRef="feel:number"/>
+          <semantic:invocation id="_dccace46-6461-441f-b00d-5f7a6856f4c6">
+            <semantic:literalExpression id="literal__dccace46-6461-441f-b00d-5f7a6856f4c6">
+              <semantic:text>Loan Fee</semantic:text>
+            </semantic:literalExpression>
+            <semantic:binding>
+              <semantic:parameter id="_d53d1382-04bc-49b5-ac6a-21f09b99342b" name="Loan Type"/>
+              <semantic:literalExpression id="_b308a96b-f141-49b1-a22f-9277e5208994">
+                <semantic:text>Requested Product.Type</semantic:text>
+              </semantic:literalExpression>
+            </semantic:binding>
+          </semantic:invocation>
+        </semantic:contextEntry>
+        <semantic:contextEntry>
+          <semantic:variable id="_4a4d34be-0755-449f-9e7d-6e563b1ec333" name="Monthly Repayment" typeRef="feel:number"/>
+          <semantic:invocation id="_980ec624-56b6-4a3e-b337-9822e442a5cd">
+            <semantic:literalExpression id="literal__980ec624-56b6-4a3e-b337-9822e442a5cd">
+              <semantic:text>PMT</semantic:text>
+            </semantic:literalExpression>
+            <semantic:binding>
+              <semantic:parameter id="_9f7f80d3-3c45-485a-bb4f-67703e351c38" name="p"/>
+              <semantic:literalExpression id="_4f9e719b-1358-4049-bff2-343407ef69be">
+                <semantic:text>Requested Product.Amount</semantic:text>
+              </semantic:literalExpression>
+            </semantic:binding>
+            <semantic:binding>
+              <semantic:parameter id="_a259b8ed-4369-4200-ba80-9cacbc658121" name="r"/>
+              <semantic:literalExpression id="_4555de91-7fbb-4a36-9cfd-a7a87c64191b">
+                <semantic:text>Requested Product.Rate</semantic:text>
+              </semantic:literalExpression>
+            </semantic:binding>
+            <semantic:binding>
+              <semantic:parameter id="_8c1c18ee-abfd-46a4-b0be-595935b42d97" name="n"/>
+              <semantic:literalExpression id="_28e21105-f513-4890-b28b-8be4eb83f5ec">
+                <semantic:text>Requested Product.Term</semantic:text>
+              </semantic:literalExpression>
+            </semantic:binding>
+          </semantic:invocation>
+        </semantic:contextEntry>
+        <semantic:contextEntry>
+          <semantic:variable id="_b4ee24f3-facf-49b4-b6dc-ca3c3afb448c" name="Required Monthly Installment" typeRef="feel:number"/>
+          <semantic:literalExpression id="_3f7192b3-cdaa-465a-9fad-ff59240e9827">
+            <semantic:text>Monthly Fee + Monthly Repayment</semantic:text>
+          </semantic:literalExpression>
+        </semantic:contextEntry>
+        <semantic:contextEntry>
+          <semantic:variable id="_d127c53e-2028-41a5-a2f5-b33674d9f507" name="Monthly Disposable Income" typeRef="feel:number"/>
+          <semantic:literalExpression id="_e7c3c116-7334-4c88-913b-4c0fea902f1c">
+            <semantic:text>Applicant Data.Monthly.Income - Required Monthly Installment</semantic:text>
+          </semantic:literalExpression>
+        </semantic:contextEntry>
+        <semantic:contextEntry>
+          <semantic:variable id="_3b211e65-aa15-4342-8e32-c13c5d4e30e0" name="Credit Contingency Factor" typeRef="feel:number"/>
+          <semantic:invocation id="_6d778588-2c27-4998-a97c-ed0b3e9a6b6e">
+            <semantic:literalExpression id="literal__6d778588-2c27-4998-a97c-ed0b3e9a6b6e">
+              <semantic:text>Contingency Factor</semantic:text>
+            </semantic:literalExpression>
+            <semantic:binding>
+              <semantic:parameter id="_49f841ee-a493-4467-9436-41dc040526d6" name="Risk"/>
+              <semantic:literalExpression id="_4446f623-f662-45f1-8392-020beb290d29">
+                <semantic:text>Risk Category</semantic:text>
+              </semantic:literalExpression>
+            </semantic:binding>
+          </semantic:invocation>
+        </semantic:contextEntry>
+        <semantic:contextEntry>
+          <semantic:literalExpression id="_a192b35e-9ba1-4a82-bc40-8ab32b1bb206">
+            <semantic:text>if (Monthly Disposable Income * Credit Contingency Factor) &gt; Required Monthly Installment 
+then true 
+else false</semantic:text>
+          </semantic:literalExpression>
+        </semantic:contextEntry>
+      </semantic:context>
+    </semantic:encapsulatedLogic>
+    <semantic:variable id="_6fca36d5-0a9e-47af-9487-6bfd1a48689f" name="Affordability Calculation" typeRef="feel:boolean"/>
+    <semantic:knowledgeRequirement>
+      <semantic:requiredKnowledge href="#_669ee08b-9ca4-41f7-9aba-578c45042fe8"/>
+    </semantic:knowledgeRequirement>
+    <semantic:knowledgeRequirement>
+      <semantic:requiredKnowledge href="#_f0777261-66b3-479d-a8f7-2e3ccc63a5df"/>
+    </semantic:knowledgeRequirement>
+    <semantic:knowledgeRequirement>
+      <semantic:requiredKnowledge href="#_a5d6f188-cdce-40f8-9ee9-f99863e00680"/>
+    </semantic:knowledgeRequirement>
+    <semantic:authorityRequirement>
+      <semantic:requiredAuthority href="#_5dbdc55d-83e2-4b51-a485-2762664dd21c"/>
+    </semantic:authorityRequirement>
+    <semantic:authorityRequirement>
+      <semantic:requiredAuthority href="#_276f097e-f0a6-407d-8ff4-6872c3690a38"/>
+    </semantic:authorityRequirement>
+  </semantic:businessKnowledgeModel>
+  <semantic:textAnnotation id="_bc899c6a-1d48-42d5-a297-fae3d2e4bfcd">
+    <semantic:text>DM Challenge:
+Routing Decision Service Alternative #1</semantic:text>
+  </semantic:textAnnotation>
+</semantic:definitions>
