@@ -1,7 +1,5 @@
 package com.myteam.barcellona20180115;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Map;
 
 import org.junit.Test;
@@ -13,6 +11,8 @@ import org.kie.dmn.api.core.DMNModel;
 import org.kie.dmn.api.core.DMNResult;
 import org.kie.dmn.api.core.DMNRuntime;
 import org.kie.dmn.feel.util.EvalHelper;
+
+import static org.junit.Assert.assertEquals;
 
 public class DMNModelsTest {
 
@@ -43,7 +43,6 @@ public class DMNModelsTest {
         CreditScore creditScore = new CreditScore();
         creditScore.setFICO(EvalHelper.getBigDecimalOrNull(650));
 
-        {
             DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_1d6da4b6-ac55-4921-8353-9a6fa05ba5c6", "Loan Pre-Qualification");
 
             DMNContext dmnContext = dmnRuntime.newContext();
@@ -59,25 +58,6 @@ public class DMNModelsTest {
             }
 
             assertEquals(((Map) dmnResult.getDecisionResultByName("Loan Pre-Qualification").getResult()).get("Qualification"), "Qualified");
-        }
-        {
-            // TODO to circumvent current jBPM limitation JBPM-6428, use a DMN "proxy" model
-            DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_bb56d276-c1b0-4bbf-b4d4-03aae8e40a73", "PROXY Loan Pre-Qualification");
-
-            DMNContext dmnContext = dmnRuntime.newContext();
-            dmnContext.set("ApplicantData", applicantData);
-            dmnContext.set("RequestedProduct", requestedProduct);
-            dmnContext.set("CreditScore", creditScore);
-
-            DMNResult dmnResult = dmnRuntime.evaluateAll(dmnModel, dmnContext);
-            System.out.println(dmnResult);
-
-            for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
-                System.out.println("Decision '" + dr.getDecisionName() + "' : " + dr.getResult());
-            }
-
-            assertEquals(dmnResult.getDecisionResultByName("LoanPre-Qualification").getResult(), "Qualified");
-        }
     }
 
     @Test
@@ -108,7 +88,6 @@ public class DMNModelsTest {
         bureauData.setCreditScore(EvalHelper.getBigDecimalOrNull(650));
         bureauData.setBankrupt(false);
 
-        {
             DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_6b57a9bb-c442-4719-b9ff-39c4a4f89419", "Routing Alternative #1");
 
             DMNContext dmnContext = dmnRuntime.newContext();
@@ -124,24 +103,5 @@ public class DMNModelsTest {
             }
 
             assertEquals(dmnResult.getDecisionResultByName("Routing").getResult(), "Accept");
-        }
-        {
-            // TODO to circumvent current jBPM limitation JBPM-6428, use a DMN "proxy" model
-            DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_54ac3aee-aaa2-4ae4-b6ed-e31afb06a5d5", "PROXY Routing Alternative #1");
-
-            DMNContext dmnContext = dmnRuntime.newContext();
-            dmnContext.set("ApplicantData", applicantData);
-            dmnContext.set("RequestedProduct", requestedProduct);
-            dmnContext.set("BureauData", bureauData);
-
-            DMNResult dmnResult = dmnRuntime.evaluateAll(dmnModel, dmnContext);
-            System.out.println(dmnResult);
-
-            for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
-                System.out.println("Decision '" + dr.getDecisionName() + "' : " + dr.getResult());
-            }
-
-            assertEquals(dmnResult.getDecisionResultByName("Routing").getResult(), "Accept");
-        }
     }
 }

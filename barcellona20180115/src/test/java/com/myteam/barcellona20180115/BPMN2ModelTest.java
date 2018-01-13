@@ -79,9 +79,11 @@ public class BPMN2ModelTest extends JbpmJUnitBaseTestCase {
         taskService.start(taskId0, USER_ID);
         taskService.complete(taskId0, USER_ID, data);
 
+        ksession.signalEvent("SignalDemo1", "", processInstanceId);
+
         assertNodeTriggered(processInstanceId, "Accepted Application");
 
-        assertEquals("Qualified", auditService.findVariableInstances(processInstanceId, "LoanPreQualification").get(0).getValue());
+        assertEquals("{Qualification=Qualified, Reason=The borrower has been successfully prequalified for the requested loan.}", auditService.findVariableInstances(processInstanceId, "LoanPreQualification").get(0).getValue());
         assertEquals("Accept", auditService.findVariableInstances(processInstanceId, "Routing").get(0).getValue());
         assertEquals("ACCEPT APPLICATION", auditService.findVariableInstances(processInstanceId, "FINAL_RESULT").get(0).getValue());
     }

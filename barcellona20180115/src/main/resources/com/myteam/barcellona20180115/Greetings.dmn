@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<semantic:definitions xmlns:semantic="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns="http://www.trisotech.com/definitions/_97a62b41-2464-43aa-91b4-37ed5cf00b2f" xmlns:feel="http://www.omg.org/spec/FEEL/20140401" xmlns:tc="http://www.omg.org/spec/DMN/20160719/testcase" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:trisofeed="http://trisotech.com/feed" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="DMN Modeler" exporterVersion="5.2.14.1" id="_97a62b41-2464-43aa-91b4-37ed5cf00b2f" name="Greetings" namespace="http://www.trisotech.com/definitions/_97a62b41-2464-43aa-91b4-37ed5cf00b2f" triso:logoChoice="Default">
+  <semantic:extensionElements/>
+  <semantic:inputData id="_45e266e4-ed5f-4c48-8867-1e818f637208" name="a Name">
+    <semantic:variable id="_3d315ab0-bbf3-4222-9da9-530f08d82782" name="a Name" typeRef="feel:string"/>
+  </semantic:inputData>
+  <semantic:decision id="_a108bb53-03ca-47fb-88d3-32ed8ccfa7b5" name="perform Greetings">
+    <semantic:variable id="_31f714cc-43c3-4c82-aac1-2157d03f58e1" name="perform Greetings" typeRef="feel:string"/>
+    <semantic:informationRequirement>
+      <semantic:requiredInput href="#_45e266e4-ed5f-4c48-8867-1e818f637208"/>
+    </semantic:informationRequirement>
+    <semantic:literalExpression id="_dd674d0d-429b-4adf-9594-96cba8f9089f">
+      <semantic:text>"Hello "+a Name</semantic:text>
+    </semantic:literalExpression>
+  </semantic:decision>
+</semantic:definitions>
