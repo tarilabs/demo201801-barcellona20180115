@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
