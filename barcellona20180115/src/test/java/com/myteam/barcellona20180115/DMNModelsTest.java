@@ -1,7 +1,5 @@
 package com.myteam.barcellona20180115;
 
-import java.util.Map;
-
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -43,21 +41,21 @@ public class DMNModelsTest {
         CreditScore creditScore = new CreditScore();
         creditScore.setFICO(EvalHelper.getBigDecimalOrNull(650));
 
-            DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_1d6da4b6-ac55-4921-8353-9a6fa05ba5c6", "Loan Pre-Qualification");
+        DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_1d6da4b6-ac55-4921-8353-9a6fa05ba5c6", "Loan Pre-Qualification");
 
-            DMNContext dmnContext = dmnRuntime.newContext();
-            dmnContext.set("Applicant Data", applicantData);
-            dmnContext.set("Requested Product", requestedProduct);
-            dmnContext.set("Credit Score", creditScore);
+        DMNContext dmnContext = dmnRuntime.newContext();
+        dmnContext.set("Applicant Data", applicantData);
+        dmnContext.set("Requested Product", requestedProduct);
+        dmnContext.set("Credit Score", creditScore);
 
-            DMNResult dmnResult = dmnRuntime.evaluateAll(dmnModel, dmnContext);
-            System.out.println(dmnResult);
+        DMNResult dmnResult = dmnRuntime.evaluateAll(dmnModel, dmnContext);
+        System.out.println(dmnResult);
 
-            for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
-                System.out.println("Decision '" + dr.getDecisionName() + "' : " + dr.getResult());
-            }
+        for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
+            System.out.println("Decision '" + dr.getDecisionName() + "' : " + dr.getResult());
+        }
 
-            assertEquals(((Map) dmnResult.getDecisionResultByName("Loan Pre-Qualification").getResult()).get("Qualification"), "Qualified");
+        assertEquals(dmnResult.getDecisionResultByName("Loan Pre-Qualification").getResult(), "Qualified");
     }
 
     @Test
@@ -88,20 +86,20 @@ public class DMNModelsTest {
         bureauData.setCreditScore(EvalHelper.getBigDecimalOrNull(650));
         bureauData.setBankrupt(false);
 
-            DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_6b57a9bb-c442-4719-b9ff-39c4a4f89419", "Routing Alternative #1");
+        DMNModel dmnModel = dmnRuntime.getModel("http://www.trisotech.com/definitions/_6b57a9bb-c442-4719-b9ff-39c4a4f89419", "Routing Alternative #1");
 
-            DMNContext dmnContext = dmnRuntime.newContext();
-            dmnContext.set("Applicant Data", applicantData);
-            dmnContext.set("Requested Product", requestedProduct);
-            dmnContext.set("Bureau Data", bureauData);
+        DMNContext dmnContext = dmnRuntime.newContext();
+        dmnContext.set("Applicant Data", applicantData);
+        dmnContext.set("Requested Product", requestedProduct);
+        dmnContext.set("Bureau Data", bureauData);
 
-            DMNResult dmnResult = dmnRuntime.evaluateAll(dmnModel, dmnContext);
-            System.out.println(dmnResult);
+        DMNResult dmnResult = dmnRuntime.evaluateAll(dmnModel, dmnContext);
+        System.out.println(dmnResult);
 
-            for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
-                System.out.println("Decision '" + dr.getDecisionName() + "' : " + dr.getResult());
-            }
+        for (DMNDecisionResult dr : dmnResult.getDecisionResults()) {
+            System.out.println("Decision '" + dr.getDecisionName() + "' : " + dr.getResult());
+        }
 
-            assertEquals(dmnResult.getDecisionResultByName("Routing").getResult(), "Accept");
+        assertEquals(dmnResult.getDecisionResultByName("Routing").getResult(), "Accept");
     }
 }
